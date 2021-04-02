@@ -121,3 +121,9 @@
     ```
 ## Text:
 - avoid create TextStyle localy inside widget, add it to AppText class so can be reuse and make the widget file shorter.
+
+## CORE IDEA:
+- 1 bloc 1 screen -> easy to reuse and modulize
+- screens only receive param as primitive type (string, double, int, bool) -> easy to reuse and modulize
+- create classes to hold constants, color, textstyle -> easy to change, easy to manage, shorter code base
+- single responsibity bloc/widget/screen: easy to read, easy to change, easy to reuse
