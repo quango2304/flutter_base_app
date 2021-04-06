@@ -8,4 +8,8 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepository authRepository;
   AuthCubit(this.authRepository) : super(AuthState(state: AuthStateEnum.loading));
+
+  void logOut() {
+    emit(state.copyWithNullable(state: AuthStateEnum.logOut));
+  }
 }

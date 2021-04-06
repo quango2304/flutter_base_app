@@ -7,7 +7,8 @@ import 'package:flutter_standard_app/utils/helpers/query_interceptor.dart';
 class UserRepository {
   late ApiClient _client;
   final AuthRepository authRepository;
-  UserRepository({required this.authRepository}) {
+  final Function logOut;
+  UserRepository({required this.authRepository, required this.logOut}) {
     final dio = Dio();
     dio.interceptors.addAll([
       QueryInterceptor(
