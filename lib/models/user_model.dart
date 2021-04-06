@@ -1,3 +1,5 @@
+//user quicktype.io to create class from json
+
 class UserModel {
   UserModel({
     this.firstName,
