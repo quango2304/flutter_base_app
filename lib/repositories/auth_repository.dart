@@ -20,7 +20,7 @@ class AuthRepository {
 
   Future<UserModel?> getUserInfo() async {
     //get userInfo from token
-    return UserModel();
+    return null;
   }
 
   Future<UserModel?> logIn() async {

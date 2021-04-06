@@ -4,7 +4,7 @@ enum AuthStateEnum {
   loading,
   notLogin,
   logOut,
-  login
+  loggedIn
 }
 
 class AuthState extends Equatable {
