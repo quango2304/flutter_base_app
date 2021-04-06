@@ -1,3 +1,5 @@
+import 'package:flutter_standard_app/models/user_model.dart';
+
 class AuthRepository {
   final Function logOut;
   String? _accessToken;
@@ -9,5 +11,9 @@ class AuthRepository {
 
   bool get isTokenExpired {
     return true;
+  }
+
+  Future<UserModel?> getUserInfo() async {
+    return UserModel();
   }
 }

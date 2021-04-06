@@ -7,9 +7,16 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepository authRepository;
-  AuthCubit(this.authRepository) : super(AuthState(state: AuthStateEnum.loading));
+  AuthCubit({required this.authRepository}) : super(AuthState(state: AuthStateEnum.loading));
 
   void logOut() {
     emit(state.copyWithNullable(state: AuthStateEnum.logOut));
+  }
+
+  void checkAuth() async {
+    final user = await authRepository.getUserInfo();
+    if(user != null) {
+      emit(AuthState(state: AuthStateEnum.login, user: user));
+    }
   }
 }

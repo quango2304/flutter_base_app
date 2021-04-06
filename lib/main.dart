@@ -4,7 +4,6 @@ import 'package:flutter_standard_app/blocs/auth/auth_cubit.dart';
 import 'package:flutter_standard_app/repositories/auth_repository.dart';
 import 'package:flutter_standard_app/repositories/user_repository.dart';
 import 'package:flutter_standard_app/screens/home_screen/home_screen.dart';
-import 'package:flutter_standard_app/screens/login_screen/login_screen.dart';
 import 'package:flutter_standard_app/screens/splash_screen/splash_screen.dart';
 
 void main() {
@@ -30,7 +29,7 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => AuthCubit(context.read<AuthRepository>()),
+          create: (context) => AuthCubit(authRepository: context.read<AuthRepository>()),
         ),
       ],
       child: child,
