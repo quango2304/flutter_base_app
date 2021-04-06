@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_standard_app/blocs/auth/auth_cubit.dart';
@@ -6,8 +7,14 @@ import 'package:flutter_standard_app/repositories/user_repository.dart';
 import 'package:flutter_standard_app/screens/home_screen/home_screen.dart';
 import 'package:flutter_standard_app/screens/splash_screen/splash_screen.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  runApp(EasyLocalization(
+      supportedLocales: [Locale('en', 'US'), Locale('vi', 'VN')],
+      path: 'assets/translations',
+      fallbackLocale: Locale('en', 'US'),
+      child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -44,7 +51,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   void listenAuthState(AuthState state) {
-    print("new state is $state");
     Future.delayed(Duration(milliseconds: 100), () {
       if (state.state == AuthStateEnum.loggedIn) {
         navKey.currentState!.pushAndRemoveUntil(
@@ -75,6 +81,9 @@ class _MyAppState extends State<MyApp> {
             },
             child: MaterialApp(
               navigatorKey: navKey,
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
               home: SplashScreen(),
             ),
           );

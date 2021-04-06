@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_standard_app/blocs/auth/auth_cubit.dart';
 import 'package:flutter_standard_app/repositories/auth_repository.dart';
 import 'package:flutter_standard_app/screens/login_screen/login_cubit/login_cubit.dart';
+import 'package:flutter_standard_app/utils/locale_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
@@ -35,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
         alignment: Alignment.center,
         child: ElevatedButton(
           onPressed: onPressLogin,
-          child: Text('Press to login'),
+          child: Text(LocaleText.pressToLogin.tr()),
         ),
       ),
     );
