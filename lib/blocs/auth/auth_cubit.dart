@@ -13,6 +13,10 @@ class AuthCubit extends Cubit<AuthState> {
     emit(state.copyWithNullable(state: AuthStateEnum.logOut));
   }
 
+  void loggedIn(UserModel user) {
+    emit(state.copyWith(state: AuthStateEnum.login, user: user));
+  }
+
   void checkAuth() async {
     final user = await authRepository.getUserInfo();
     if(user != null) {

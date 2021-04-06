@@ -16,6 +16,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
   Widget addReposProviders({required Widget child}) {
     return MultiRepositoryProvider(providers: [
       RepositoryProvider(create: (context) => AuthRepository(logOut: logOut)),

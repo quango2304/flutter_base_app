@@ -15,7 +15,11 @@ class UserRepository {
         accessToken: authRepository.getAccessToken,
         dio: dio,
         getNewToken: () async {
-          return 'new token';
+          final newToken = await authRepository.getNewToken();
+          if(newToken != null) {
+            return newToken;
+          }
+          logOut();
         }
       ),
     ]);

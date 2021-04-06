@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 class QueryInterceptor extends Interceptor {
   final String? accessToken;
   final Dio dio;
-  final Future<String> Function() getNewToken;
+  final Future<String?> Function() getNewToken;
 
   QueryInterceptor({this.accessToken, required this.dio, required this.getNewToken});
 
@@ -21,10 +21,12 @@ class QueryInterceptor extends Interceptor {
       dio.interceptors.responseLock.lock();
       RequestOptions options = error.requestOptions;
       final token = await getNewToken();
-      options.headers["Authorization"] = "Bearer " + token;
-      dio.interceptors.requestLock.unlock();
-      dio.interceptors.responseLock.unlock();
-      return super.onRequest(options, RequestInterceptorHandler());
+      if(token != null) {
+        options.headers["Authorization"] = "Bearer " + token;
+        dio.interceptors.requestLock.unlock();
+        dio.interceptors.responseLock.unlock();
+        return super.onRequest(options, RequestInterceptorHandler());
+      }
     }
     return super.onError(error, handler);
   }
