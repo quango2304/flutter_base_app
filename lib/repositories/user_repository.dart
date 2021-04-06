@@ -1,19 +1,21 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_standard_app/api_client/api_client.dart';
 import 'package:flutter_standard_app/models/user_model.dart';
+import 'package:flutter_standard_app/repositories/auth_repository.dart';
 import 'package:flutter_standard_app/utils/helpers/query_interceptor.dart';
-import 'package:logger/logger.dart';
 
 class UserRepository {
   late ApiClient _client;
-  final logger = Logger();
-  final String? accessToken;
-
-  UserRepository({this.accessToken}) {
+  final AuthRepository authRepository;
+  UserRepository({required this.authRepository}) {
     final dio = Dio();
     dio.interceptors.addAll([
       QueryInterceptor(
-        accessToken: accessToken,
+        accessToken: authRepository.getAccessToken,
+        dio: dio,
+        getNewToken: () async {
+          return 'new token';
+        }
       ),
     ]);
     _client = ApiClient(dio, baseUrl: 'EnvironmentVariable.instance.userBaseUrl');
