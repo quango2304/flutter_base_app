@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_standard_app/blocs/auth/auth_cubit.dart';
-import 'package:flutter_standard_app/screens/login_screen/login_screen.dart';
+import 'package:flutter_standard_app/routing/routes.dart';
+import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -18,9 +19,8 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Text('splash screen'),
             ElevatedButton(onPressed: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (_) => LoginScreen.newInstance()), (route) => false);
-            }, child: Text("Login"))
+              Get.offAllNamed(AppRoutes.login);
+                }, child: Text("Login"))
           ],
         ),
       ),

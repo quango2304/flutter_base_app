@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_standard_app/blocs/auth/auth_cubit.dart';
 import 'package:flutter_standard_app/repositories/auth_repository.dart';
 import 'package:flutter_standard_app/repositories/user_repository.dart';
-import 'package:flutter_standard_app/screens/home_screen/home_screen.dart';
+import 'package:flutter_standard_app/routing/pages.dart';
+import 'package:flutter_standard_app/routing/routes.dart';
 import 'package:flutter_standard_app/screens/splash_screen/splash_screen.dart';
+import 'package:get/get.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -13,8 +15,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final navKey = GlobalKey<NavigatorState>();
-
   Widget addReposProviders({required Widget child}) {
     return MultiRepositoryProvider(providers: [
       RepositoryProvider(create: (context) => AuthRepository(logOut: logOut)),
@@ -43,14 +43,11 @@ class _MyAppState extends State<MyApp> {
   void listenAuthState(AuthState state) {
     Future.delayed(Duration(milliseconds: 100), () {
       if (state.state == AuthStateEnum.loggedIn) {
-        navKey.currentState!.pushAndRemoveUntil(
-            MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
+        Get.offAllNamed(AppRoutes.home);
         return;
       }
       if (state.state == AuthStateEnum.logOut) {
-        navKey.currentState!.pushAndRemoveUntil(
-            MaterialPageRoute(builder: (_) => SplashScreen()),
-            (route) => false);
+        Get.offAllNamed(AppRoutes.splashScreen);
         return;
       }
     });
@@ -69,12 +66,13 @@ class _MyAppState extends State<MyApp> {
               return state.state == AuthStateEnum.logOut ||
                   state.state == AuthStateEnum.loggedIn;
             },
-            child: MaterialApp(
-              navigatorKey: navKey,
+            child: GetMaterialApp(
               localizationsDelegates: context.localizationDelegates,
               supportedLocales: context.supportedLocales,
               locale: context.locale,
               home: SplashScreen(),
+              initialRoute: AppRoutes.splashScreen,
+              onGenerateRoute: AppPages.instance.onGenerateRoute,
             ),
           );
         }),
